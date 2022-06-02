@@ -4,14 +4,17 @@
 
 const db = require('./routes/dbConfig')
 
+//USERS
 
 function getAllUsers(){
     return db('users').orderBy('id', 'desc')
 }
 
 async function addUser(user){
-  await db('users').insert(user)
-  return db('users').where({username:user.username})
+//   await db('users').insert(user)
+//   return db('users').where({username:user.username})
+    return await db('users').insert(user,['id', 'username'])
+
 }
 
 function findUserByUsername(username){
@@ -48,7 +51,7 @@ function getAllDestinations(){
 async function addDestination(newDestination){
     await db('destinations')
     .where({user_id:newDestination.user_id})
-    .insert(newDestination)
+    .insert(newDestination, ['id'])
 }
 
 function removeDestination(id){
